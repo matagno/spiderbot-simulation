@@ -109,9 +109,9 @@ class Robot:
 
 
         # Paramètres
-        step_length = 120
-        step_height = 70
-        step_height_rot = 30
+        step_length = 150 #120
+        step_height = 85 #70
+        step_height_rot = 45 #30
         T = 0.25 
         T_rot = 0.5
 
@@ -120,20 +120,20 @@ class Robot:
         phase_AVG_ARD = t + T/2.0    # AVG + ARD décalées 
 
         # Position origine
-        x_std, y_std, z_std = 80, 80, -80
+        x_std, y_std, z_std = 100, 120, -100 #80, 80, -80
 
 
         # Mode turn
         dx, dy, dz = 0, 0, 0 
-        x_leg_offset_std = 38.5 
-        y_leg_offset_std = 27.175 
+        x_leg_offset_std = 42.57 #38.5 
+        y_leg_offset_std = 48.75 #27.175 
         if self.turn :
             if not self.turn_last_cycle :
                 self.t0_rot=t
                 self.angle_to_turn = angle_target
             t_rot=t-self.t0_rot
             angle_rot_past = min(self.angle_to_turn, np.pi/8) if angle_target > 0 else max(self.angle_to_turn, -np.pi/8)
-            z_std = -60
+            z_std = -80 #-60
             if t_rot >= T_rot :
                 self.angle_to_turn = self.angle_to_turn - angle_rot_past
                 if abs(self.angle_to_turn) > 0.001:
@@ -152,7 +152,10 @@ class Robot:
         if self.turn :
             x_start_in_bot = x + x_leg_offset_std
             y_start_in_bot = y + y_leg_offset_std
-            x, y, z = rot_traj(t_rot, 1, (x_start_in_bot, y_start_in_bot, z), angle_rot, step_height_rot, T_rot)
+            x_in_bot, y_in_bot, z_in_bot = rot_traj(t_rot, 1, (x_start_in_bot, y_start_in_bot, z), angle_rot, step_height_rot, T_rot)
+            x = x_in_bot - x_leg_offset_std
+            y = y_in_bot - y_leg_offset_std
+            z = z_in_bot
         self.q[9], self.q[10], self.q[11] = ik_leg((x, y, z), leg_rotation=0.0)
         # ARG
         x, y, z = -x_std, -y_std, z_std
@@ -163,7 +166,10 @@ class Robot:
         if self.turn :
             x_start_in_bot = x - x_leg_offset_std
             y_start_in_bot = y - y_leg_offset_std
-            x, y, z = rot_traj(t_rot, 2, (x_start_in_bot, y_start_in_bot, z), angle_rot, step_height_rot, T_rot)
+            x_in_bot, y_in_bot, z_in_bot = rot_traj(t_rot, 2, (x_start_in_bot, y_start_in_bot, z), angle_rot, step_height_rot, T_rot)
+            x = x_in_bot + x_leg_offset_std
+            y = y_in_bot + y_leg_offset_std
+            z = z_in_bot
         self.q[13], self.q[14], self.q[15] = ik_leg((x, y, z), leg_rotation=np.pi)
 
         
@@ -176,7 +182,10 @@ class Robot:
         if self.turn :
             x_start_in_bot = x + x_leg_offset_std
             y_start_in_bot = y - y_leg_offset_std
-            x, y, z = rot_traj(t_rot, 3, (x_start_in_bot, y_start_in_bot, z), angle_rot, step_height_rot, T_rot)
+            x_in_bot, y_in_bot, z_in_bot = rot_traj(t_rot, 3, (x_start_in_bot, y_start_in_bot, z), angle_rot, step_height_rot, T_rot)
+            x = x_in_bot - x_leg_offset_std
+            y = y_in_bot + y_leg_offset_std
+            z = z_in_bot
         self.q[5], self.q[6], self.q[7] = ik_leg((-x, y, z), leg_rotation=np.pi)
         # ARD
         x, y, z = -x_std, y_std, z_std
@@ -187,7 +196,10 @@ class Robot:
         if self.turn :
             x_start_in_bot = x - x_leg_offset_std
             y_start_in_bot = y + y_leg_offset_std
-            x, y, z = rot_traj(t_rot, 4, (x_start_in_bot, y_start_in_bot, z), angle_rot, step_height_rot, T_rot)
+            x_in_bot, y_in_bot, z_in_bot = rot_traj(t_rot, 4, (x_start_in_bot, y_start_in_bot, z), angle_rot, step_height_rot, T_rot)
+            x = x_in_bot + x_leg_offset_std
+            y = y_in_bot - y_leg_offset_std
+            z = z_in_bot
         self.q[1], self.q[2], self.q[3] = ik_leg((-x, y, z), leg_rotation=0.0)
 
         
@@ -272,24 +284,22 @@ def rot_traj(t, phase_id, xyz_start_in_bot, angle, step_height, T=2.0):
     Trajectoire d'un pied pour rotation.
     """
     x_start_in_bot, y_start_in_bot, z_start_in_bot = xyz_start_in_bot
-    x_leg_offset = 38.5 if phase_id == 1 or phase_id == 3 else -38.5
-    y_leg_offset = 27.175 if phase_id == 1 or phase_id == 4 else -27.175 
     phase = min(max(t / T, 0.0), 1.0)
     start = (phase_id-1) / 4
     end   = phase_id / 4
 
     if phase < start:
-        x = x_start_in_bot - x_leg_offset
-        y = y_start_in_bot - y_leg_offset
+        x = x_start_in_bot 
+        y = y_start_in_bot 
         z = z_start_in_bot
     elif start <= phase < end:
         local_phase = (phase - start) / (end - start)
-        x = x_start_in_bot * math.cos(angle * local_phase) - y_start_in_bot * math.sin(angle * local_phase) - x_leg_offset
-        y = x_start_in_bot * math.sin(angle * local_phase) + y_start_in_bot * math.cos(angle * local_phase) - y_leg_offset
+        x = x_start_in_bot * math.cos(angle * local_phase) - y_start_in_bot * math.sin(angle * local_phase)
+        y = x_start_in_bot * math.sin(angle * local_phase) + y_start_in_bot * math.cos(angle * local_phase)
         z = step_height * math.sin(local_phase * math.pi)
     elif end <= phase :
-        x = x_start_in_bot * math.cos(angle) - y_start_in_bot * math.sin(angle) - x_leg_offset
-        y = x_start_in_bot * math.sin(angle) + y_start_in_bot * math.cos(angle) - y_leg_offset
+        x = x_start_in_bot * math.cos(angle) - y_start_in_bot * math.sin(angle)
+        y = x_start_in_bot * math.sin(angle) + y_start_in_bot * math.cos(angle)
         z = z_start_in_bot
 
     return (x, y, z)

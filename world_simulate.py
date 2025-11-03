@@ -7,12 +7,14 @@ from interface import Interface
 
 class WorldSimulate:
 
-    def __init__(self, client_type, env_path, robot_path):
+    def __init__(self, client_type, env_path, robot_path, heightfield=False):
         self.client_type = client_type
         self.client_id = p.connect(client_type)
 
-        #self.ground_id = self.load_world(env_path)
-        self.ground_id = self.create_heightfield_ground()
+        if heightfield :
+            self.ground_id = self.create_heightfield_ground()
+        else :
+            self.ground_id = self.load_world(env_path)
         self.bot = self.load_object(robot_path)
 
         self.interface = Interface(self.client_id) if client_type == p.GUI else None

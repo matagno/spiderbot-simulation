@@ -5,11 +5,11 @@ import numpy as np
 ##################################
 #       Robot description        #
 #
-# Thigh length : 45.5 + 49 = 94.5
-# Foot length : 97.64                       
-# (94.529 mm, -24.467 mm)
+# Thigh length : 45.5 mm + 49 mm = 94.5             // 60 mm + 76.84 mm = 136.84 mm
+# Foot length : 97.64 mm                            // 128.05 mm           
+# (94.529 mm, -24.467 mm)                           // Osef
 #
-# Offset foot angle : 14.51
+# Offset foot angle : 14.51 deg (0.2443461 rad)     // 9.5 deg (0,15708 rad)
 #
 # Find : Hip, Knee, Foot
 #
@@ -19,7 +19,7 @@ def clamp(x, a=-1.0, b=1.0):
     return max(a, min(b, x))
 
 
-def ik_leg(target, leg_rotation=0.0, leg_base=(0.0,0.0,0.0), coxa=45.5, tl=49, fl=97.64, offset_foot_angle=0.2443461):
+def ik_leg(target, leg_rotation=0.0, leg_base=(0.0,0.0,0.0), coxa=60, tl=76.84, fl=128.05, offset_foot_angle=0.15708):
     # target : (x,y,z) in body frame (mm)
     # leg_base : (bx,by,bz) offset of leg base in body frame (mm)
 

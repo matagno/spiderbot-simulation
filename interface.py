@@ -59,20 +59,20 @@ class Interface:
         self.current_mode = 3
 
         self.param_x_AVD = p.addUserDebugParameter(" X AVD", -100.0, 200.0, 0.0, physicsClientId=self.world_parent_id)
-        self.param_y_AVD = p.addUserDebugParameter(" Y AVD", 0.0, 200.0, 94.5, physicsClientId=self.world_parent_id)
-        self.param_z_AVD = p.addUserDebugParameter(" Z AVD", -100.0, 0.0, -97.64, physicsClientId=self.world_parent_id)
+        self.param_y_AVD = p.addUserDebugParameter(" Y AVD", 0.0, 200.0, 136.84, physicsClientId=self.world_parent_id)
+        self.param_z_AVD = p.addUserDebugParameter(" Z AVD", -200.0, 0.0, -128.05, physicsClientId=self.world_parent_id)
         
         self.param_x_AVG = p.addUserDebugParameter(" X AVG", -100.0, 200.0, 0.0, physicsClientId=self.world_parent_id)
-        self.param_y_AVG = p.addUserDebugParameter(" Y AVG", -200.0, 0.0, -94.5, physicsClientId=self.world_parent_id)
-        self.param_z_AVG = p.addUserDebugParameter(" Z AVG", -100.0, 0.0, -97.64, physicsClientId=self.world_parent_id)
+        self.param_y_AVG = p.addUserDebugParameter(" Y AVG", -200.0, 0.0, -136.84, physicsClientId=self.world_parent_id)
+        self.param_z_AVG = p.addUserDebugParameter(" Z AVG", -200.0, 0.0, -128.05, physicsClientId=self.world_parent_id)
        
         self.param_x_ARD = p.addUserDebugParameter(" X ARD", -200.0, 100.0, 0.0, physicsClientId=self.world_parent_id)
-        self.param_y_ARD = p.addUserDebugParameter(" Y ARD", 0.0, 200.0, 94.5, physicsClientId=self.world_parent_id)
-        self.param_z_ARD = p.addUserDebugParameter(" Z ARD", -100.0, 0.0, -97.64, physicsClientId=self.world_parent_id)
+        self.param_y_ARD = p.addUserDebugParameter(" Y ARD", 0.0, 200.0, 136.84, physicsClientId=self.world_parent_id)
+        self.param_z_ARD = p.addUserDebugParameter(" Z ARD", -200.0, 0.0, -128.05, physicsClientId=self.world_parent_id)
         
         self.param_x_ARG = p.addUserDebugParameter(" X ARG", -200.0, 100.0, 0.0, physicsClientId=self.world_parent_id)
-        self.param_y_ARG = p.addUserDebugParameter(" Y ARG", -200.0, 0.0, -94.5, physicsClientId=self.world_parent_id)
-        self.param_z_ARG = p.addUserDebugParameter(" Z ARG", -100.0, 0.0, -97.64, physicsClientId=self.world_parent_id)
+        self.param_y_ARG = p.addUserDebugParameter(" Y ARG", -200.0, 0.0, -136.84, physicsClientId=self.world_parent_id)
+        self.param_z_ARG = p.addUserDebugParameter(" Z ARG", -200.0, 0.0, -128.05, physicsClientId=self.world_parent_id)
 
 
 
