@@ -109,10 +109,10 @@ class Robot:
 
 
         # Paramètres
-        step_length = 150 #120
-        step_height = 85 #70
+        step_length = 180 #120
+        step_height = 100 #70
         step_height_rot = 45 #30
-        T = 0.25 
+        T = 1 #0.25 
         T_rot = 0.5
 
         # Phases Marche
@@ -120,7 +120,7 @@ class Robot:
         phase_AVG_ARD = t + T/2.0    # AVG + ARD décalées 
 
         # Position origine
-        x_std, y_std, z_std = 100, 120, -100 #80, 80, -80
+        x_std, y_std, z_std = 100, 120, -80 #80, 80, -80
 
 
         # Mode turn
@@ -145,9 +145,11 @@ class Robot:
         # Deplacement
         # AVD
         x, y, z = x_std, y_std, z_std
+        z_eq = 20
+        z = z + z_eq
         if self.run :
             dx, dy, dz = foot_traj(phase_AVD_ARG, step_length, step_height, T)
-            z_eq = 20
+            z_eq = 0
             x, y, z = x+dx, y+dy, z+z_eq+dz
         if self.turn :
             x_start_in_bot = x + x_leg_offset_std
@@ -159,9 +161,11 @@ class Robot:
         self.q[9], self.q[10], self.q[11] = ik_leg((x, y, z), leg_rotation=0.0)
         # ARG
         x, y, z = -x_std, -y_std, z_std
+        z_eq = -50
+        z = z + z_eq
         if self.run :
             dx, dy, dz = foot_traj(phase_AVD_ARG, step_length, step_height, T)
-            z_eq = -30
+            z_eq = 0
             x, y, z = x+dx, y+dy, z+z_eq+dz
         if self.turn :
             x_start_in_bot = x - x_leg_offset_std
@@ -175,9 +179,11 @@ class Robot:
         
         # AVG 
         x, y, z = x_std, -y_std, z_std
+        z_eq = 20
+        z = z + z_eq
         if self.run :
             dx, dy, dz = foot_traj(phase_AVG_ARD, step_length, step_height, T)
-            z_eq = 20
+            z_eq = 0
             x, y, z = x+dx, y+dy, z+z_eq+dz
         if self.turn :
             x_start_in_bot = x + x_leg_offset_std
@@ -189,10 +195,12 @@ class Robot:
         self.q[5], self.q[6], self.q[7] = ik_leg((-x, y, z), leg_rotation=np.pi)
         # ARD
         x, y, z = -x_std, y_std, z_std
+        z_eq = -50
+        z = z + z_eq
         if self.run :
             dx, dy, dz = foot_traj(phase_AVG_ARD, step_length, step_height, T)
-            z_eq = -30
-            x, y, z = x+dx, y+dy, z_std+z_eq+dz
+            z_eq = 0
+            x, y, z = x+dx, y+dy, z+z_eq+dz
         if self.turn :
             x_start_in_bot = x - x_leg_offset_std
             y_start_in_bot = y + y_leg_offset_std
