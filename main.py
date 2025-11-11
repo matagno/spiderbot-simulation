@@ -16,10 +16,10 @@ debug = False
 physics_world = WorldSimulate(p.GUI, "plane.urdf", "Robot_mesh_urdf_V3/RobotSpider_With_Col.urdf")
 
 p.resetDebugVisualizerCamera(
-    cameraDistance=0.4,             # Zoom (augmenter pour dézoomer)
-    cameraYaw=50,                   # Angle de rotation (0 = face avant)
-    cameraPitch=-35,                # Inclinaison vers le bas (-30 pour une vue plongeante)
-    cameraTargetPosition=[0, 0, 0], # Point que la caméra vise (centre du robot)
+    cameraDistance=0.4,
+    cameraYaw=50,
+    cameraPitch=-35,
+    cameraTargetPosition=[0, 0, 0],
     physicsClientId=physics_world.client_id
 )
 
@@ -98,3 +98,4 @@ while True:
 
 
 p.disconnect()
+

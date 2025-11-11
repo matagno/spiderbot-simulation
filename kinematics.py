@@ -11,7 +11,7 @@ import numpy as np
 #
 # Offset foot angle : 14.51 deg (0.2443461 rad)     // 9.5 deg (0,15708 rad)
 #
-# Find : Hip, Knee, Foot
+# Result : Hip, Knee, Foot
 #
 
 
@@ -20,9 +20,6 @@ def clamp(x, a=-1.0, b=1.0):
 
 
 def ik_leg(target, leg_rotation=0.0, leg_base=(0.0,0.0,0.0), coxa=60, tl=76.84, fl=128.05, offset_foot_angle=0.15708):
-    # target : (x,y,z) in body frame (mm)
-    # leg_base : (bx,by,bz) offset of leg base in body frame (mm)
-
     local_target = np.array(target) - np.array(leg_base)
     rot = np.array([[math.cos(-leg_rotation), -math.sin(-leg_rotation), 0],
                     [math.sin(-leg_rotation),  math.cos(-leg_rotation), 0],

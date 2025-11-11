@@ -78,6 +78,7 @@ class Robot:
         result = ik_leg((-x, y, z), leg_rotation=0.0)
         if result is not None:
             self.q[1], self.q[2], self.q[3] = result
+            print(result)
         # ARG
         x = p.readUserDebugParameter(interface.param_x_ARG, physicsClientId=interface.world_parent_id)
         y = p.readUserDebugParameter(interface.param_y_ARG, physicsClientId=interface.world_parent_id)

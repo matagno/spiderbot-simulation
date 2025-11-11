@@ -30,6 +30,8 @@ class Interface:
         self.angle_id = None
 
         
+
+        
     def init_auto(self):
         self.current_mode = 1
         self.run_id = p.addUserDebugParameter(" Run", 1, 0, 1, physicsClientId=self.world_parent_id)

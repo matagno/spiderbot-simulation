@@ -20,15 +20,7 @@ class WorldSimulate:
         self.interface = Interface(self.client_id) if client_type == p.GUI else None
 
 
-    def load_world(self, env_path):
-        """
-        Load env_path
-        Parameters: 
-            env_path (str) : URDF file of env_path
-        Returns: 
-            ground_id (int) : Index of the PyBullet object
-        """
-        
+    def load_world(self, env_path):        
         p.setAdditionalSearchPath(pybullet_data.getDataPath(), physicsClientId=self.client_id)
         p.setGravity(0, 0, -9.81, physicsClientId=self.client_id)
 
@@ -38,9 +30,6 @@ class WorldSimulate:
 
 
     def create_heightfield_ground(self):
-        """
-        Create a heightfield ground with three zones: left incline, flat middle, right incline
-        """
         p.setGravity(0, 0, -9.81)
         
         # Dimensions 
@@ -86,13 +75,6 @@ class WorldSimulate:
 
 
     def load_object(self, robot_path):
-        """
-        Load robot
-        Parameters: 
-            robot_path (str) : URDF file of robot
-        Returns: 
-            robot (Robot) : Object of class Robot
-        """
         robot_start_pos = [0, 0, 0.8]  # Augmentation de la hauteur initiale
         robot_start_orientation = p.getQuaternionFromEuler([0, 0, 0])
     
